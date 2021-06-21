@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script defer src="app.js"></script>
+    <style>
+      html,
+      body {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+      }
+
+      .margin-top-util {
+        margin-top: 25px;
+      }
+
+      .row {
+        margin: 0 auto;
+      }
+      .row::after {
+        content: "";
+        display: table;
+        clear: both;
+      }
+
+      .row:not(:last-child) {
+        margin-bottom: 20px;
+      }
+
+      .col {
+        float: left;
+        background-color: white;
+        width: calc((100% - 20px) / 2);
+      }
+
+      .col-max {
+        width: 100%;
+      }
+
+      .text-center {
+        text-align: center;
+      }
+
+      /* .col:not(:last-child) {
+        margin-right: 20px;
+        margin-bottom: 20px;
+      } */
+
+      .cus-width {
+        width: 80%;
+      }
+
+      /* radio */
+      .radio {
+        display: inline-flex;
+        align-items: center;
+      }
+
+      .radio:not(:last-child) {
+        margin-bottom: 20px;
+      }
+
+      .radio--input {
+        display: none;
+      }
+
+      .radio__span {
+        display: inline-flex;
+        width: 15px;
+        height: 15px;
+        border-radius: 50%;
+        border: 1px solid rgb(170, 233, 170);
+        padding: 5px;
+        margin-right: 10px;
+      }
+
+      .radio__span::after {
+        content: "";
+        display: block;
+        width: 100%;
+        height: 100%;
+        background-color: #4ae1b0;
+        border-radius: 50%;
+        transform: scale(0);
+        transition: 0.15s;
+      }
+
+      .radio--input:checked + .radio__span::after {
+        transform: scale(1);
+      }
+
+      /* range slider */
+      .slider-range {
+        display: flex;
+      }
+
+      .speed {
+        font-size: 17px;
+        flex-basis: 10%;
+      }
+
+      .wrap-range {
+        position: relative;
+        flex-basis: 90%;
+        display: flex;
+        align-items: center;
+      }
+
+      .slider {
+        width: 100%;
+        margin: 0;
+      }
+
+      .bubble {
+        background: rgb(108 162 228);
+        color: white;
+        position: absolute;
+        backface-visibility: hidden;
+        height: 30px;
+        width: 30px;
+        padding: 3px;
+        border: 1px solid rgb(100, 172, 166);
+        border-radius: 50px 50px 0;
+        left: 50%;
+        bottom: 100%;
+        margin-bottom: 10px;
+        z-index: 99;
+        transform: translateX(-50%) rotate(45deg);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .value {
+        transform: rotate(-45deg);
+        background-color: inherit;
+      }
+
+      #text-area {
+        width: 100%;
+      }
+
+      #button,
+      #button2,
+      #save,
+      #merge,
+      #pdf,
+      #pdf-Page {
+        background-color: #4caf50;
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        margin-right: 20px;
+      }
+
+      #durations {
+        margin: 20px;
+        padding: 5px 10px;
+        outline: none;
+      }
+
+      #terminal {
+        height: 430px;
+        background-color: #2f2c2c;
+      }
+
+      .radio-url {
+        display: flex;
+        /* justify-content: space-between;
+        align-items: center; */
+        flex-wrap: wrap;
+      }
+
+      .radio-url .radio {
+        margin-bottom: 40px;
+        margin-right: 25px;
+      }
+
+      #text-length {
+        text-align: right;
+      }
+
+      @media only screen and (max-width: 1000px) {
+        .col {
+          width: 100%;
+        }
+        .col-mb {
+          width: calc((100% - 20px) / 2);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container margin-top-util">
+      <div class="row">
+        <div class="col">
+          <div class="row cus-width">
+            <div class="col col-mb">
+              <label for="leminh" class="radio">
+                <input
+                  type="radio"
+                  name="voice"
+                  id="leminh"
+                  value="leminh"
+                  class="radio--input"
+                />
+                <span class="radio__span"></span>
+                Lê Minh (Nam miền Bắc)
+              </label>
+
+              <label for="banmai" class="radio">
+                <input
+                  type="radio"
+                  name="voice"
+                  id="banmai"
+                  value="banmai"
+                  class="radio--input"
+                  checked
+                />
+                <span class="radio__span"></span>
+                Ban Mai (Nữ miền Bắc)
+              </label>
+
+              <label for="thuminh" class="radio">
+                <input
+                  type="radio"
+                  name="voice"
+                  id="thuminh"
+                  value="thuminh"
+                  class="radio--input"
+                />
+                <span class="radio__span"></span>
+                Thu Minh (Nữ miền Bắc)
+              </label>
+
+              <label for="giahuy" class="radio">
+                <input
+                  type="radio"
+                  name="voice"
+                  id="giahuy"
+                  value="giahuy"
+                  class="radio--input"
+                />
+                <span class="radio__span"></span>
+                Gia Huy (Nam miền Trung)
+              </label>
+            </div>
+            <!-- col thu 2 -->
+            <div class="col col-mb">
+              <label for="myan" class="radio">
+                <input
+                  type="radio"
+                  name="voice"
+                  id="myan"
+                  value="myan"
+                  class="radio--input"
+                />
+                <span class="radio__span"></span>
+                Mỹ An (Nữ miền Trung)
+              </label>
+
+              <label for="lannhi" class="radio">
+                <input
+                  type="radio"
+                  name="voice"
+                  id="lannhi"
+                  value="lannhi"
+                  class="radio--input"
+                />
+                <span class="radio__span"></span>
+                Lan Nhi (Nữ miền Nam)
+              </label>
+
+              <label for="linhsan" class="radio">
+                <input
+                  type="radio"
+                  name="voice"
+                  id="linhsan"
+                  value="linhsan"
+                  class="radio--input"
+                />
+                <span class="radio__span"></span>
+                Linh San (Nữ miền Nam)
+              </label>
+            </div>
+          </div>
+
+          <div class="row cus-width">
+            <div class="col col-max">
+              <p>
+                Character remain: <span id="characters">null</span> Characters /
+                month
+              </p>
+              <label for="durations">Choose duration:</label>
+
+              <select id="durations">
+                <option value="1000">1000</option>
+                <option value="2000">2000</option>
+                <option value="4000">4000</option>
+                <option value="6000" selected="selected">6000</option>
+                <option value="8000">8000</option>
+              </select>
+
+              <div class="radio-url">
+                <label for="docln" class="radio">
+                  <input
+                    type="radio"
+                    name="url"
+                    id="docln"
+                    value="docln"
+                    class="radio--input"
+                    checked
+                  />
+                  <span class="radio__span"></span>
+                  docln.net
+                </label>
+                <label for="meobietbay" class="radio">
+                  <input
+                    type="radio"
+                    name="url"
+                    id="meobietbay"
+                    value="meobietbay"
+                    class="radio--input"
+                  />
+                  <span class="radio__span"></span>
+                  meobietbay.com
+                </label>
+                <label for="truyenfull" class="radio">
+                  <input
+                    type="radio"
+                    name="url"
+                    id="truyenfull"
+                    value="truyenfull"
+                    class="radio--input"
+                  />
+                  <span class="radio__span"></span>
+                  truyenfull.vn
+                </label>
+                <label for="text" class="radio">
+                  <input
+                    type="radio"
+                    name="url"
+                    id="text"
+                    value="text"
+                    class="radio--input"
+                  />
+                  <span class="radio__span"></span>
+                  text
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="row cus-width">
+            <div class="col col-max">
+              <div class="slider-range">
+                <div class="speed">Speed</div>
+                <div class="wrap-range">
+                  <input
+                    type="range"
+                    min="-3"
+                    max="3"
+                    value="0"
+                    class="slider"
+                    id="myRange"
+                  />
+                  <output class="bubble"><span class="value">0</span></output>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row cus-width">
+            <div class="col col-max">
+              <textarea id="text-area" name="text" rows="8"></textarea>
+            </div>
+            <div id="text-length">0</div>
+            <!-- <audio id="audioT" controls>
+              <source
+                id="mp3Source"
+                src="C:\\Users\\huy\\Desktop\\light novel\\Utsuro no Hako to Zero no Maria\\tập 4\\mp3/2-toan-tap.mp3"
+                type="audio/mpeg"
+              />
+              Your browser does not support the audio tag.
+            </audio> -->
+          </div>
+          <div class="row cus-width">
+            <a href="#" id="button">OK</a>
+            <a href="#" id="save">MP3</a>
+            <a href="#" id="pdf">PDF</a>
+            <a href="#" id="pdf-Page">PDF page</a>
+            <a href="#" id="merge">Fix File</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      document
+        .querySelector("#text-area")
+        .addEventListener("keyup", function (e) {
+          document.querySelector("#text-length").innerHTML =
+            e.target.value.length;
+        });
+    </script>
+  </body>
+</html>
